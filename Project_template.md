@@ -60,6 +60,13 @@
 Приложите скриншот тестов и скриншот состояния топиков Kafka http://localhost:8090 
 
 
+Тесты: ![test_screen.png](tests%2Fresult%2Ftest_screen.png)
+Топики: ![topics.png](tests%2Fresult%2Ftopics.png)
+Топик movie-events: ![topic-movie.png](tests%2Fresult%2Ftopic-movie.png)
+Топик payment-events: ![topic-payment.png](tests%2Fresult%2Ftopic-payment.png)
+Топик user-events: ![topic-user.png](tests%2Fresult%2Ftopic-user.png)
+
+
 ## Задание 3
 
 Команда начала переезд в Kubernetes для лучшего масштабирования и повышения надежности. 
