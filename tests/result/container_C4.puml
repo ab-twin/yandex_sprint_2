@@ -1,0 +1,49 @@
+@startuml
+title CinemaAbyss Container Diagram
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "Пользователь", "Ищет и смотрит фильмы, оставляет отзывы")
+
+System_Boundary(cinema_abyss, "Система CinemaAbyss") {
+
+    Container(api_gateway, "API Gateway / BFF", "Node.js/Nginx", "Единая точка входа для пользователей")
+
+    Container(movie_service, "Movie Service", "Go / FastAPI", "Обрабатывает каталог фильмов")
+    Container(review_service, "Review Service", "Python / FastAPI", "Отзывы пользователей на фильмы")
+    Container(event_service, "Event Service", "Python / FastAPI", "Хранение событий: покупки, просмотры")
+    Container(user_service, "User Service", "Python / FastAPI", "Регистрация, логин, профиль пользователя")
+    Container(billing_service, "Billing Service", "Python / FastAPI", "Оплата и транзакции")
+    Container(notification_service, "Notification Service", "Node.js", "Отправка уведомлений пользователям")
+    Container(analytics_service, "Analytics Service", "Python", "Сбор аналитики и метрик")
+
+    ContainerDb(main_db, "PostgreSQL", "Хранение данных пользователей, фильмов, отзывов и событий")
+    Container(kafka, "Kafka", "Event Broker", "Шина событий между сервисами")
+
+}
+
+Rel(user, api_gateway, "HTTP", "REST/JSON")
+Rel(api_gateway, movie_service, "Получение фильмов")
+Rel(api_gateway, review_service, "Чтение/добавление отзывов")
+Rel(user_service, event_service, "Отправка событий")
+Rel(billing_service, event_service, "Отправка событий")
+Rel(movie_service, event_service, "Отправка событий")
+Rel(review_service, event_service, "Отправка событий")
+Rel(api_gateway, user_service, "Аутентификация и профиль")
+Rel(api_gateway, billing_service, "Покупка фильмов")
+Rel(notification_service, kafka, "Получение уведомлений")
+
+Rel(event_service, kafka, "Публикует события")
+Rel(review_service, kafka, "Публикует события")
+Rel(movie_service, kafka, "Читает события")
+Rel(kafka, analytics_service, "Поставляет события")
+
+Rel(movie_service, main_db, "Читает/Пишет")
+Rel(review_service, main_db, "Читает/Пишет")
+Rel(event_service, main_db, "Читает/Пишет")
+Rel(event_service, analytics_service, "Читает/Пишет")
+Rel(user_service, main_db, "Читает/Пишет")
+Rel(billing_service, main_db, "Читает/Пишет")
+Rel(notification_service, user, "Читает")
+
+@enduml
