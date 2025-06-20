@@ -361,6 +361,11 @@ minikube tunnel
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
 
+Развертывание Helm пришлось несколько раз апгрейдить, чтоб завелись все сервисы:
+![helm-log.png](tests%2Fresult%2Fhelm%2Fhelm-log.png)
+
+Страница фильмов:
+![movie.png](tests%2Fresult%2Fhelm%2Fmovie.png)
 
 # Задание 5
 Компания планирует активно развиваться и для повышения надежности, безопасности, реализации сетевых паттернов типа Circuit Breaker и канареечного деплоя вам как архитектору необходимо развернуть istio и настроить circuit breaker для monolith и movies сервисов.
@@ -426,6 +431,15 @@ You can see 21 for the upstream_rq_pending_overflow value which means 21 calls s
 ```
 
 Приложите скриншот работы circuit breaker'а
+
+лог:
+![istio-log.png](tests%2Fresult%2Fistio%2Fistio-log.png)
+
+лог контейнера:
+![log.png](tests%2Fresult%2Fistio%2Flog.png)
+
+лог fortio:
+![fortio.png](tests%2Fresult%2Fistio%2Ffortio.png)
 
 Удаляем все
 ```bash
